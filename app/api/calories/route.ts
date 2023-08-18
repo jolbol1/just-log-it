@@ -3,12 +3,10 @@ import * as z from 'zod';
 
 import { authOptions } from '@/lib/auth';
 import { db } from '@/lib/db';
+import { caloriesCreateSchema } from '@/lib/validations/calories';
+import { DateTime } from 'luxon';
 
-const entryCreateSchema = z.object({
-  breakfast: z.number().min(0),
-  lunch: z.number().min(0),
-  dinner: z.number().min(0)
-});
+const entryCreateSchema = caloriesCreateSchema;
 
 export async function GET() {
   try {
@@ -47,7 +45,8 @@ export async function POST(req: Request) {
         breakfast: body.breakfast,
         lunch: body.lunch,
         dinner: body.dinner,
-        userId: session.user.id
+        userId: session.user.id,
+        logDate: DateTime.fromFormat(body.logDate, 'yyyy-MM-dd').toJSDate()
       },
       select: {
         entryId: true
@@ -60,6 +59,6 @@ export async function POST(req: Request) {
       return new Response(JSON.stringify(error.issues), { status: 422 });
     }
 
-    return new Response(null, { status: 500 });
+    return new Response(JSON.stringify({ error }), { status: 500 });
   }
 }

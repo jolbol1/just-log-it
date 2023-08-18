@@ -1,9 +1,9 @@
 import './globals.css';
 
 import { Analytics } from '@vercel/analytics/react';
-import Nav from './nav';
-import Toast from './toast';
-import { Suspense } from 'react';
+import { SiteHeader } from '@/components/site-header';
+import { ThemeProvider } from '@/components/providers';
+import { cn } from '@/lib/utils';
 
 export const metadata = {
   title: 'Next.js 13 + PlanetScale + NextAuth + Tailwind CSS',
@@ -17,14 +17,20 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full bg-gray-50">
-      <body className="h-full">
-        <Suspense>
-          <Nav />
-        </Suspense>
-        {children}
+    <html lang="en">
+      <body className={cn('min-h-screen bg-background font-sans antialiased')}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="relative flex min-h-screen flex-col">
+            <SiteHeader />
+            <div className="flex-1">{children}</div>
+          </div>
+        </ThemeProvider>
         <Analytics />
-        <Toast />
       </body>
     </html>
   );

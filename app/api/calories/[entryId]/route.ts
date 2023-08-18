@@ -8,7 +8,7 @@ import { caloriesPatchSchema } from '@/lib/validations/calories';
 
 const routeContextSchema = z.object({
   params: z.object({
-    entryId: z.number()
+    entryId: z.coerce.number()
   })
 });
 

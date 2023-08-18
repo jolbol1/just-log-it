@@ -92,7 +92,7 @@ model Post {
 model Calories {
   entryId   Int    @id @default(autoincrement())
   userId   String
-  logDate  DateTime @default(now()) @map("log_date")
+  logDate  DateTime @map("log_date")
   breakfast Int?   @default(0)
   lunch     Int?   @default(0)
   dinner    Int?   @default(0)
