@@ -6,6 +6,9 @@ import { db } from '@/lib/db';
 export const authOptions: NextAuthOptions = {
   debug: true,
   adapter: PrismaAdapter(db as any),
+  pages: {
+    signIn: "/login",
+  },
   session: {
     strategy: 'jwt'
   },

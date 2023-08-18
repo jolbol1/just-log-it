@@ -12,7 +12,7 @@ export default async function PlaygroundPage() {
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect(authOptions?.pages?.signIn || '/');
+    redirect(authOptions?.pages?.signIn || '/login');
   }
 
   const calories = await db.calories.findMany({
