@@ -1,5 +1,3 @@
-'use client';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -23,7 +21,7 @@ import { useEffect, useState } from 'react';
 
 const formSchema = caloriesCreateSchema;
 
-export function QuickEntryForm() {
+export function QuickEntryForm({ onSuccess }: { onSuccess: () => void }) {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     // @ts-ignore
@@ -54,7 +52,9 @@ export function QuickEntryForm() {
       })
     });
 
-    const post = await response.json();
+    if (response.ok) {
+      onSuccess();
+    }
 
     // This forces a cache invalidation.
     router.refresh();

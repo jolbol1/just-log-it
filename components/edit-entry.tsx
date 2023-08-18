@@ -1,5 +1,3 @@
-'use client';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -38,7 +36,15 @@ const InputSkeleton = ({
   }
 };
 
-export function EditEntry({ entryId }: { entryId: number }) {
+export function EditEntry({
+  entryId,
+  onSuccess,
+  setEditLoading
+}: {
+  entryId: number;
+  onSuccess?: () => void;
+  setEditLoading: (loading: boolean) => void;
+}) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -57,6 +63,7 @@ export function EditEntry({ entryId }: { entryId: number }) {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setEditLoading(true);
     const response = await fetch(`/api/calories/${entryId}`, {
       method: 'PATCH',
       headers: {
@@ -72,8 +79,13 @@ export function EditEntry({ entryId }: { entryId: number }) {
       })
     });
 
+    if (response.ok) {
+      onSuccess?.();
+    }
+
     // This forces a cache invalidation.
     router.refresh();
+    setEditLoading(false);
   };
 
   useEffect(() => {

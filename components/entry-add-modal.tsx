@@ -11,10 +11,12 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { QuickEntryForm } from './quick-entry';
+import { useState } from 'react';
 
 export function EntryAddDialog() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="default" size="sm" className="h-8">
           Add Entry
@@ -28,7 +30,7 @@ export function EntryAddDialog() {
             this later in the table.
           </DialogDescription>
         </DialogHeader>
-        <QuickEntryForm />
+        <QuickEntryForm onSuccess={() => setIsOpen(false)} />
         <DialogFooter>
           <Button type="submit" form="add-form">
             Add Entry

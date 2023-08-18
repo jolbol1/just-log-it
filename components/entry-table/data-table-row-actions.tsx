@@ -59,11 +59,13 @@ export function DataTableRowActions<TData>({
         entryId={row.getValue('entryId')}
         open={deleteOpen}
         onOpenChange={setDeleteOpen}
+        onSuccess={() => setDeleteOpen(false)}
       />
       <EditEntryDialog
         entryId={row.getValue('entryId')}
         open={editOpen}
         onOpenChange={setEditOpen}
+        onSuccess={() => setEditOpen(false)}
       />
     </>
   );

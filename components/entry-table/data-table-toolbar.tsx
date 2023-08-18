@@ -9,6 +9,7 @@ import { DataTableViewOptions } from '@/components/entry-table/data-table-view-o
 
 import { DataTableFacetedFilter } from './data-table-faceted-filter';
 import { EntryAddDialog } from '../entry-add-modal';
+import { useState } from 'react';
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
