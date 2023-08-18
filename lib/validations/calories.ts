@@ -8,7 +8,8 @@ export const caloriesPatchSchema = z.object({
   lunch: z.number({ invalid_type_error: 'Must be whole number' }).min(0).int(),
   dinner: z.number({ invalid_type_error: 'Must be whole number' }).min(0).int(),
   snacks: z.number({ invalid_type_error: 'Must be whole number' }).min(0).int(),
-  weight: z.number().min(0)
+  weight: z.number().min(0),
+  logDate: z.string()
 });
 
 export const caloriesCreateSchema = z.object({

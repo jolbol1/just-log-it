@@ -5,12 +5,37 @@ import { authOptions } from '@/lib/auth';
 import { db } from '@/lib/db';
 
 import { caloriesPatchSchema } from '@/lib/validations/calories';
+import { DateTime } from 'luxon';
 
 const routeContextSchema = z.object({
   params: z.object({
     entryId: z.coerce.number()
   })
 });
+
+export async function GET(
+  req: Request,
+  context: z.infer<typeof routeContextSchema>
+) {
+  try {
+    const { params } = routeContextSchema.parse(context);
+    const session = await getServerSession(authOptions);
+
+    if (!(await verifyCurrentUserHasAccessToEntry(params.entryId))) {
+      return new Response(null, { status: 403 });
+    }
+
+    const calories = await db.calories.findFirst({
+      where: {
+        entryId: params.entryId
+      }
+    });
+
+    return new Response(JSON.stringify(calories));
+  } catch (error) {
+    return new Response(null, { status: 500 });
+  }
+}
 
 export async function DELETE(
   req: Request,
@@ -59,6 +84,7 @@ export async function PATCH(
     const json = await req.json();
     const body = caloriesPatchSchema.parse(json);
 
+    console.log(params.entryId, body);
     // Update the post.
     // TODO: Implement sanitization for content.
     await db.calories.update({
@@ -70,7 +96,8 @@ export async function PATCH(
         lunch: body.lunch,
         dinner: body.dinner,
         snacks: body.snacks,
-        weight: body.weight
+        weight: body.weight,
+        logDate: DateTime.fromFormat(body.logDate, 'yyyy-MM-dd').toJSDate()
       }
     });
 
@@ -80,7 +107,7 @@ export async function PATCH(
       return new Response(JSON.stringify(error.issues), { status: 422 });
     }
 
-    return new Response(null, { status: 500 });
+    return new Response(JSON.stringify(error), { status: 500 });
   }
 }
 

@@ -11,25 +11,30 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { QuickEntryForm } from './quick-entry';
+import { EditEntry } from './edit-entry';
 
-export function EntryAddDialog() {
+interface EditEntryDialogProps {
+  entryId: number;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+export function EditEntryDialog({
+  entryId,
+  open,
+  onOpenChange
+}: EditEntryDialogProps) {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="default">Add Entry</Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add Entry</DialogTitle>
-          <DialogDescription>
-            Log your calories for the day. Don&apos;t worry, you can always edit
-            this later in the table.
-          </DialogDescription>
+          <DialogTitle>Edit Entry</DialogTitle>
+          <DialogDescription>Edit data in the journal.</DialogDescription>
         </DialogHeader>
-        <QuickEntryForm />
+        <EditEntry entryId={entryId} />
         <DialogFooter>
           <Button type="submit" form="add-form">
-            Add Entry
+            Save Entry
           </Button>
         </DialogFooter>
       </DialogContent>

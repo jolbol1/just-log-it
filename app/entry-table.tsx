@@ -1,22 +1,32 @@
 'use client';
 
 import { ConfirmDelete } from '@/components/confirm-delete';
-import { AlertDialog } from '@/components/ui/alert-dialog';
+import { EditEntryDialog } from '@/components/edit-entry-dialog';
 import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/data-table';
 import { Calories } from '@prisma/client';
-import { Cross1Icon, TrashIcon } from '@radix-ui/react-icons';
 import { ColumnDef, Row } from '@tanstack/react-table';
+import { EditIcon, Trash2Icon } from 'lucide-react';
 import { DateTime } from 'luxon';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export const RowActions = ({ row }: { row: Row<Calories> }) => {
   const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
   const router = useRouter();
 
   return (
-    <>
+    <div className="flex flex-row gap-2">
+      <Button
+        variant="secondary"
+        size="icon"
+        aria-label="Delete entry"
+        onClick={() => setEditOpen(true)}
+        className="h-6 w-6"
+      >
+        <EditIcon className="h-4 w-4" />
+      </Button>
       <Button
         variant="destructive"
         size="icon"
@@ -24,14 +34,19 @@ export const RowActions = ({ row }: { row: Row<Calories> }) => {
         onClick={() => setOpen(true)}
         className="h-6 w-6"
       >
-        <TrashIcon className="h-5 w-5" />
+        <Trash2Icon className="h-4 w-4" />
       </Button>
       <ConfirmDelete
         entryId={row.getValue('entryId')}
         open={open}
         onOpenChange={setOpen}
       />
-    </>
+      <EditEntryDialog
+        entryId={row.getValue('entryId')}
+        open={editOpen}
+        onOpenChange={setEditOpen}
+      />
+    </div>
   );
 };
 
