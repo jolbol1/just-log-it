@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
-import { ChevronLeft, CircleEllipsis, GithubIcon } from 'lucide-react';
+import { ChevronLeft, CircleEllipsis, GithubIcon, Loader2 } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function LoginPage() {
   const [isGitHubLoading, setIsGitHubLoading] = useState(false);
   return (
-    <div className="container flex h-screen w-screen flex-col items-center justify-center">
+    <div className="relative grow min-h-full container flex w-screen flex-col items-center justify-center">
       <Link
         href="/"
         className={cn(
@@ -47,7 +47,7 @@ export default function LoginPage() {
             disabled={isGitHubLoading}
           >
             {isGitHubLoading ? (
-              <CircleEllipsis className="mr-2 h-4 w-4 animate-spin" />
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : (
               <GithubIcon className="mr-2 h-4 w-4" />
             )}{' '}

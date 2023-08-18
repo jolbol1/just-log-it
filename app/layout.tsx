@@ -27,7 +27,7 @@ export default async function RootLayout({
         >
           <div className="relative flex min-h-screen flex-col">
             <SiteHeader />
-            <div className="flex-1">{children}</div>
+            <div className="flex-1 flex">{children}</div>
           </div>
         </ThemeProvider>
         <Analytics />

@@ -18,5 +18,5 @@ export default async function IndexPage({
 }) {
   const search = searchParams.q ?? '';
 
-  return <main className="p-4 md:p-10 mx-auto max-w-7xl">Hi</main>;
+  return <main className="w-full p-4 md:p-10 mx-auto max-w-7xl">Hi</main>;
 }
