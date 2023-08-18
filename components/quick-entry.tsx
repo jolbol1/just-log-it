@@ -25,6 +25,7 @@ const formSchema = caloriesCreateSchema;
 
 export function QuickEntryForm() {
   const router = useRouter();
+  // @ts-ignore
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
