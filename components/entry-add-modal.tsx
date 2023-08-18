@@ -16,7 +16,9 @@ export function EntryAddDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default">Add Entry</Button>
+        <Button variant="default" size="sm" className="h-8">
+          Add Entry
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

@@ -19,13 +19,40 @@ export default async function PlaygroundPage() {
   const calories = await db.calories.findMany({
     where: {
       userId: user.id
+    },
+    orderBy: {
+      logDate: 'asc'
     }
+  });
+
+  let previousWeight: number | undefined;
+
+  const res = calories.map((calorie, index) => {
+    let weightDayDiff: number | undefined;
+
+    if (
+      previousWeight !== undefined &&
+      calorie.weight !== null &&
+      calorie.weight > 0
+    ) {
+      weightDayDiff = calorie.weight - previousWeight;
+    }
+
+    previousWeight = calorie.weight ?? undefined;
+    return {
+      ...calorie,
+      totalCalories:
+        (calorie.breakfast ?? 0) +
+        (calorie.lunch ?? 0) +
+        (calorie.dinner ?? 0) +
+        (calorie.snacks ?? 0),
+      weightDayDiff
+    };
   });
 
   return (
     <main className="w-full p-4 md:p-10 mx-auto max-w-7xl">
-      <EntryAddDialog />
-      <EntryTable entries={calories}></EntryTable>
+      <EntryTable entries={res}></EntryTable>
     </main>
   );
 }

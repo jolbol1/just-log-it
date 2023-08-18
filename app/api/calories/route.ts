@@ -5,6 +5,7 @@ import { authOptions } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { caloriesCreateSchema } from '@/lib/validations/calories';
 import { DateTime } from 'luxon';
+import { ca } from 'date-fns/locale';
 
 const entryCreateSchema = caloriesCreateSchema;
 
@@ -23,7 +24,32 @@ export async function GET() {
       }
     });
 
-    return new Response(JSON.stringify(calories));
+    let previousWeight: number | null = null;
+
+    const res = calories.map((calorie, index) => {
+      let weightDifference: number | null = null;
+
+      if (
+        previousWeight !== null &&
+        calorie.weight !== null &&
+        calorie.weight > 0
+      ) {
+        weightDifference = calorie.weight - previousWeight;
+      }
+
+      previousWeight = calorie.weight;
+      return {
+        ...calorie,
+        totalCalories:
+          (calorie.breakfast ?? 0) +
+          (calorie.lunch ?? 0) +
+          (calorie.dinner ?? 0) +
+          (calorie.snacks ?? 0),
+        weightDayDiff: weightDifference
+      };
+    });
+
+    return new Response(JSON.stringify(res));
   } catch (error) {
     return new Response(null, { status: 500 });
   }
