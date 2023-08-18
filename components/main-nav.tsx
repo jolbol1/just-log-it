@@ -20,7 +20,7 @@ export function MainNav({ user }: { user?: User & { id: string } }) {
       </Link>
       <nav className="flex items-center space-x-6 text-sm font-medium">
         <Link
-          href="/playground"
+          href="/dashboard"
           className={cn(
             'transition-colors hover:text-foreground/80',
             pathname === '/playground'

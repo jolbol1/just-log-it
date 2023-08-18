@@ -96,6 +96,8 @@ model Calories {
   breakfast Int?   @default(0)
   lunch     Int?   @default(0)
   dinner    Int?   @default(0)
+  snacks    Int?   @default(0)
+  weight    Float? @default(0)
 
   user User @relation(fields: [userId], references: [id])
 

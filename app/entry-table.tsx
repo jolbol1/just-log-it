@@ -1,35 +1,42 @@
 'use client';
 
 import { ConfirmDelete } from '@/components/confirm-delete';
+import { AlertDialog } from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/data-table';
 import { Calories } from '@prisma/client';
 import { Cross1Icon, TrashIcon } from '@radix-ui/react-icons';
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import { DateTime } from 'luxon';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger
-} from '@/components/ui/alert-dialog';
 
-export default async function EntryTable({ entries }: { entries: Calories[] }) {
-  const [deleteDialog, setDeleteDialog] = useState<boolean>(false);
-  const [entryId, setEntryId] = useState<number>(0);
-
+export const RowActions = ({ row }: { row: Row<Calories> }) => {
+  const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  const handleOpen = (enrtyId: number) => {
-    setEntryId(enrtyId);
-    setDeleteDialog(true);
-  };
+  return (
+    <>
+      <Button
+        variant="destructive"
+        size="icon"
+        aria-label="Delete entry"
+        onClick={() => setOpen(true)}
+        className="h-6 w-6"
+      >
+        <TrashIcon className="h-5 w-5" />
+      </Button>
+      <ConfirmDelete
+        entryId={row.getValue('entryId')}
+        open={open}
+        onOpenChange={setOpen}
+      />
+    </>
+  );
+};
+
+export default async function EntryTable({ entries }: { entries: Calories[] }) {
+  const router = useRouter();
 
   const columns: ColumnDef<Calories>[] = [
     {
@@ -54,36 +61,23 @@ export default async function EntryTable({ entries }: { entries: Calories[] }) {
       header: 'Dinner'
     },
     {
+      accessorKey: 'snacks',
+      header: 'Snacks'
+    },
+    {
+      accessorKey: 'weight',
+      header: 'Weight',
+      cell: ({ row }) => row.getValue<number>('weight').toFixed(2) + ' kg'
+    },
+    {
       accessorKey: 'entryId',
-      cell: (props) => (
-        <TrashIcon
-          onClick={() => {
-            handleOpen(props.getValue<number>());
-          }}
-        />
-      )
+      header: 'Actions',
+      cell: (props) => <RowActions row={props.row} />
     }
   ];
 
   return (
     <>
-      <AlertDialog open={deleteDialog} onOpenChange={setDeleteDialog}>
-        <AlertDialogTrigger>Open</AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>Continue</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
       <DataTable columns={columns} data={entries} />
     </>
   );

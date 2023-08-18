@@ -10,21 +10,33 @@ import {
   PopoverTrigger
 } from '@/components/ui/popover';
 import { DateTime } from 'luxon';
-import { SelectSingleEventHandler } from 'react-day-picker';
+import {
+  MonthChangeEventHandler,
+  SelectSingleEventHandler
+} from 'react-day-picker';
+import { useEffect, useState } from 'react';
 
 interface DatePickerProps {
   date?: Date;
   setDate?: SelectSingleEventHandler;
+  month?: Date;
+  setMonth?: MonthChangeEventHandler;
   todayFunction: () => void;
 }
-export function DatePicker({ date, setDate, todayFunction }: DatePickerProps) {
+export function DatePicker({
+  date,
+  setDate,
+  month,
+  setMonth,
+  todayFunction
+}: DatePickerProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           variant={'outline'}
           className={cn(
-            'w-[140px] justify-start text-left font-normal',
+            'w-full justify-start text-left font-normal',
             !date && 'text-muted-foreground'
           )}
         >
@@ -41,6 +53,8 @@ export function DatePicker({ date, setDate, todayFunction }: DatePickerProps) {
           mode="single"
           selected={date}
           onSelect={setDate}
+          month={month}
+          onMonthChange={setMonth}
           initialFocus
         />
         <div className="p-2 w-full">

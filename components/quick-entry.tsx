@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation';
 import { caloriesCreateSchema } from '@/lib/validations/calories';
 import { DateTime } from 'luxon';
 import { DatePicker } from './ui/date-picker';
+import { useEffect, useState } from 'react';
 
 const formSchema = caloriesCreateSchema;
 
@@ -30,6 +31,8 @@ export function QuickEntryForm() {
       breakfast: 0,
       lunch: 0,
       dinner: 0,
+      snacks: 0,
+      weight: 0,
       logDate: DateTime.now().toFormat('yyyy-MM-dd')
     }
   });
@@ -44,7 +47,9 @@ export function QuickEntryForm() {
         breakfast: values.breakfast,
         lunch: values.lunch,
         dinner: values.dinner,
-        logDate: values.logDate
+        logDate: values.logDate,
+        snacks: values.snacks,
+        weight: values.weight
       })
     });
 
@@ -54,48 +59,23 @@ export function QuickEntryForm() {
     router.refresh();
   };
 
+  const [month, setMonth] = useState<Date>();
+
+  useEffect(() => {
+    form.watch((data) =>
+      setMonth(
+        DateTime.fromFormat(data.logDate as string, 'yyyy-MM-dd').toJSDate()
+      )
+    );
+  }, [form, form.watch]);
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="breakfast"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Breakfast</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder="0" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="lunch"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Lunch</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder="0" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="dinner"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Dinner</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder="0" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form
+        id="add-form"
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4"
+      >
         <FormField
           control={form.control}
           name="logDate"
@@ -104,8 +84,10 @@ export function QuickEntryForm() {
               <FormLabel>Date</FormLabel>
               <FormControl>
                 <DatePicker
+                  month={month}
+                  setMonth={setMonth}
                   date={DateTime.fromFormat(
-                    field.value,
+                    field.value as string,
                     'yyyy-MM-dd'
                   ).toJSDate()}
                   setDate={(date) =>
@@ -127,7 +109,71 @@ export function QuickEntryForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <FormField
+          control={form.control}
+          name="breakfast"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Breakfast</FormLabel>
+              <FormControl>
+                <Input suffix="kcal" type="number" placeholder="0" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="lunch"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Lunch</FormLabel>
+              <FormControl>
+                <Input suffix="kcal" type="number" placeholder="0" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="dinner"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Dinner</FormLabel>
+              <FormControl>
+                <Input suffix="kcal" type="number" placeholder="0" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="snacks"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Snacks</FormLabel>
+              <FormControl>
+                <Input suffix="kcal" type="number" placeholder="0" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="weight"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Weight</FormLabel>
+              <FormControl>
+                <Input suffix="kg" type="weight" placeholder="0" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       </form>
     </Form>
   );

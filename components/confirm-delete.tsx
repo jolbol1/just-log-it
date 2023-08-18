@@ -1,5 +1,3 @@
-'use client';
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,10 +13,16 @@ import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 
 interface ConfirmDeleteProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
   entryId?: number;
 }
 
-export function ConfirmDelete({ entryId }: ConfirmDeleteProps) {
+export function ConfirmDelete({
+  open,
+  onOpenChange,
+  entryId
+}: ConfirmDeleteProps) {
   const router = useRouter();
   const onDelete = async () => {
     const response = await fetch(`/api/calories/${entryId}`, {
@@ -30,20 +34,22 @@ export function ConfirmDelete({ entryId }: ConfirmDeleteProps) {
   };
 
   return (
-    <AlertDialogContent>
-      <AlertDialogHeader>
-        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-        <AlertDialogDescription>
-          This action cannot be undone. This will permanently delete your
-          account and remove your data from our servers.
-        </AlertDialogDescription>
-      </AlertDialogHeader>
-      <AlertDialogFooter>
-        <AlertDialogCancel>Cancel</AlertDialogCancel>
-        <AlertDialogAction onClick={() => onDelete()} variant="destructive">
-          Delete
-        </AlertDialogAction>
-      </AlertDialogFooter>
-    </AlertDialogContent>
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete this
+            entry from the server.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={() => onDelete()} variant="destructive">
+            Delete
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }

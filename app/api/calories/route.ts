@@ -45,6 +45,8 @@ export async function POST(req: Request) {
         breakfast: body.breakfast,
         lunch: body.lunch,
         dinner: body.dinner,
+        snacks: body.snacks,
+        weight: body.weight,
         userId: session.user.id,
         logDate: DateTime.fromFormat(body.logDate, 'yyyy-MM-dd').toJSDate()
       },
