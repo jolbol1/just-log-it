@@ -68,7 +68,9 @@ export async function PATCH(
       data: {
         breakfast: body.breakfast,
         lunch: body.lunch,
-        dinner: body.dinner
+        dinner: body.dinner,
+        snacks: body.snacks,
+        weight: body.weight
       }
     });
 
