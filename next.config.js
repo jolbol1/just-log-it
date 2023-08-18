@@ -4,7 +4,8 @@ const nextConfig = {
     domains: ['avatars.githubusercontent.com', 'avatar.vercel.sh']
   },
   experimental: {
-    serverComponentsExternalPackages: ['@tremor/react']
+    appDir: true,
+    serverComponentsExternalPackages: ['@tremor/react', '@prisma/client']
   }
 };
 
