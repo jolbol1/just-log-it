@@ -84,7 +84,6 @@ export async function PATCH(
     const json = await req.json();
     const body = caloriesPatchSchema.parse(json);
 
-    console.log(params.entryId, body);
     // Update the post.
     // TODO: Implement sanitization for content.
     await db.calories.update({

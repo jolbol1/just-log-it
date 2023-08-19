@@ -31,8 +31,6 @@ export function DataTableRowActions<TData>({
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
 
-  console.log('Row', row, row.getValue('entryId'));
-
   return (
     <>
       <DropdownMenu>

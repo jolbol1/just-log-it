@@ -21,8 +21,7 @@ export function DataTableToolbar<TData>({
   const isFiltered = table.getState().columnFilters.length > 0;
 
   return (
-    <div className="flex items-center justify-between">
-      <h3 className="font-medium flex reverse">Log Entries</h3>
+    <div className="flex items-center justify-end">
       <div className="flex gap-2">
         <EntryAddDialog />
         <DataTableViewOptions table={table} />

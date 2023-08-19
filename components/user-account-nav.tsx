@@ -12,13 +12,14 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { UserAvatar } from '@/components/user-avatar';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user?: Pick<User, 'name' | 'image' | 'email'>;
 }
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
+  const router = useRouter();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -61,7 +62,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
             className="cursor-pointer"
             onSelect={(event) => {
               event.preventDefault();
-              redirect('/login');
+              router.push('/login');
             }}
           >
             Sign in

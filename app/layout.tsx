@@ -1,4 +1,7 @@
 import './globals.css';
+import { Inter as FontSans } from 'next/font/google';
+
+import localFont from 'next/font/local';
 
 import { Analytics } from '@vercel/analytics/react';
 import { SiteHeader } from '@/components/site-header';
@@ -11,6 +14,16 @@ export const metadata = {
     'A user admin dashboard configured with Next.js, PlanetScale, NextAuth, Tailwind CSS, TypeScript, ESLint, and Prettier.'
 };
 
+const fontSans = FontSans({
+  subsets: ['latin'],
+  variable: '--font-sans'
+});
+
+const fontHeading = localFont({
+  src: '../assets/fonts/CalSans-SemiBold.woff2',
+  variable: '--font-heading'
+});
+
 export default async function RootLayout({
   children
 }: {
@@ -18,7 +31,13 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn('min-h-screen bg-background font-sans antialiased')}>
+      <body
+        className={cn(
+          'min-h-screen bg-background font-sans antialiased',
+          fontHeading.variable,
+          fontSans.variable
+        )}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

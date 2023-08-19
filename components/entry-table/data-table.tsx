@@ -47,10 +47,6 @@ export function DataTable<TData, TValue>({
   );
   const [sorting, setSorting] = React.useState<SortingState>(initialSort ?? []);
 
-  React.useEffect(() => {
-    console.log('Sorting', sorting);
-  }, [sorting]);
-
   const table = useReactTable({
     data,
     columns,
