@@ -3,8 +3,7 @@ import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
-import { ChevronLeft, CircleEllipsis, GithubIcon, Loader2 } from 'lucide-react';
-import { signIn } from 'next-auth/react';
+import { ChevronLeft } from 'lucide-react';
 import { LoginOptions } from '@/components/login-options';
 
 export const metadata: Metadata = {
