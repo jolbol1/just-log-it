@@ -5,7 +5,6 @@ import { authOptions } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { caloriesCreateSchema } from '@/lib/validations/calories';
 import { DateTime } from 'luxon';
-import { ca } from 'date-fns/locale';
 
 const entryCreateSchema = caloriesCreateSchema;
 
@@ -65,7 +64,6 @@ export async function POST(req: Request) {
 
     const json = await req.json();
     const body = entryCreateSchema.parse(json);
-
     const entry = await db.calories.create({
       data: {
         breakfast: body.breakfast,

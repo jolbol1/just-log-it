@@ -32,3 +32,5 @@ export const caloriesCreateSchema = z.object({
   weight: z.coerce.number().min(0),
   logDate: z.string()
 });
+
+export const caloriesImportSchema = z.array(caloriesCreateSchema);

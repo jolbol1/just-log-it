@@ -15,7 +15,7 @@ export function MainNav({ user }: { user?: User & { id: string } }) {
   return (
     <div className="mr-4 flex justify-between">
       <Link href="/" className="mr-6 flex items-center space-x-2">
-        <ScrollText className="mr-1 h-6 w-6" />
+        <ScrollText className="mr-1 h-6 w-6 text-primary" />
         <span className="hidden font-bold sm:inline-block">
           {siteConfig.name}
         </span>
