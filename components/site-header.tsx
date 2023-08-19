@@ -17,7 +17,7 @@ export async function SiteHeader() {
         <MainNav />
         {/* <MobileNav /> */}
         <div className="flex flex-1 items-center space-x-2 justify-end">
-          <nav className="flex items-center gap-2">
+          <nav className="flex items-center gap-4">
             <ModeToggle />
             <UserAccountNav user={user} />
           </nav>
