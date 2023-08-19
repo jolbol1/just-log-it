@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     body.forEach(async (entry) => {
       const entryDate = DateTime.fromFormat(entry.logDate, 'yyyy-MM-dd');
       if (!entryDate.isValid) {
-        return;
+        throw new Error(`Invalid date: ${entry.logDate}`);
       }
       await db.calories.upsert({
         where: {
