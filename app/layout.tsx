@@ -33,7 +33,8 @@ export const metadata = {
     url: siteConfig.url,
     title: siteConfig.name,
     description: siteConfig.description,
-    siteName: siteConfig.name
+    siteName: siteConfig.name,
+    images: [{ url: `${siteConfig.url}/og.jpg` }]
   },
   twitter: {
     card: 'summary_large_image',
