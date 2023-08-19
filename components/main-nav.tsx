@@ -7,13 +7,15 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { User } from 'next-auth/core/types';
 import { siteConfig } from '@/config/site';
+import { ScrollText } from 'lucide-react';
 
 export function MainNav({ user }: { user?: User & { id: string } }) {
   const pathname = usePathname();
 
   return (
-    <div className="mr-4 hidden md:flex">
+    <div className="mr-4 flex justify-between">
       <Link href="/" className="mr-6 flex items-center space-x-2">
+        <ScrollText className="mr-1 h-6 w-6" />
         <span className="hidden font-bold sm:inline-block">
           {siteConfig.name}
         </span>

@@ -4,15 +4,7 @@ import { cn } from '@/lib/utils';
 import { MoveRight } from 'lucide-react';
 import Link from 'next/link';
 
-export const dynamic = 'force-dynamic';
-
-export default async function IndexPage({
-  searchParams
-}: {
-  searchParams: { q: string };
-}) {
-  const search = searchParams.q ?? '';
-
+export default async function IndexPage() {
   return (
     <main className="w-full p-4 md:p-10 mx-auto max-w-7xl">
       <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">

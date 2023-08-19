@@ -7,11 +7,47 @@ import { Analytics } from '@vercel/analytics/react';
 import { SiteHeader } from '@/components/site-header';
 import { ThemeProvider } from '@/components/providers';
 import { cn } from '@/lib/utils';
+import { siteConfig } from '@/config/site';
 
 export const metadata = {
-  title: 'Next.js 13 + PlanetScale + NextAuth + Tailwind CSS',
-  description:
-    'A user admin dashboard configured with Next.js, PlanetScale, NextAuth, Tailwind CSS, TypeScript, ESLint, and Prettier.'
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`
+  },
+  description: siteConfig.description,
+  keywords: ['Tracker', 'Calories', 'Weight', 'Fitness', 'Goals'],
+  authors: [
+    {
+      name: 'James Shopland',
+      url: 'https://jamesshopland.com'
+    }
+  ],
+  creator: 'James Shopland',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' }
+  ],
+  openGraph: {
+    type: 'website',
+    locale: 'en_GB',
+    url: siteConfig.url,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [`${siteConfig.url}/og.jpg`],
+    creator: '@jollyshopland'
+  },
+  icons: [
+    { rel: 'icon', url: '/favicon-32x32.png', sizes: '32x32' },
+    { rel: 'icon', url: '/favicon-16x16.png', sizes: '16x16' },
+    { rel: 'apple-touch-icon', url: '/apple-touch-icon.png', sizes: '180x180' }
+  ],
+  manifest: `${siteConfig.url}/site.webmanifest`
 };
 
 const fontSans = FontSans({

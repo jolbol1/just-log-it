@@ -1,25 +1,25 @@
-import { PostCreateButton } from '@/components/post-create-button';
 import { authOptions } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { getCurrentUser } from '@/lib/session';
 import { redirect } from 'next/navigation';
 import EntryTable from '../entry-table';
-import { Input } from '@/components/ui/input';
-import { QuickEntryForm } from '@/components/quick-entry';
-import { EntryAddDialog } from '@/components/entry-add-modal';
-import { EditEntryDialog } from '@/components/edit-entry-dialog';
 import { GoalsForm } from '@/components/goals-form';
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CaloriesFull } from '@/types/models';
 import { Separator } from '@/components/ui/separator';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Dashboard',
+  description: 'Manage your fitness goals and track your progress.'
+};
 
 export default async function PlaygroundPage() {
   const user = await getCurrentUser();
