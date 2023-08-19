@@ -22,14 +22,17 @@ export async function POST(req: Request) {
     const json = await req.json();
     const body = entryCreateSchema.parse(json);
 
-    body.forEach(async (entry) => {
-      const entryDate = DateTime.fromFormat(entry.logDate, 'yyyy-MM-dd');
+    const promises = body.map(async (entry) => {
+      const entryDate = DateTime.fromFormat(
+        entry.logDate,
+        'yyyy-MM-dd'
+      ).toJSDate();
 
-      await db.calories.upsert({
+      return db.calories.upsert({
         where: {
           userId_logDate: {
             userId: session.user.id,
-            logDate: DateTime.fromFormat(entry.logDate, 'yyyy-MM-dd').toJSDate()
+            logDate: entryDate
           }
         },
         create: {
@@ -39,7 +42,7 @@ export async function POST(req: Request) {
           snacks: entry.snacks,
           weight: entry.weight,
           userId: session.user.id,
-          logDate: DateTime.fromFormat(entry.logDate, 'yyyy-MM-dd').toJSDate()
+          logDate: entryDate
         },
         update: {
           breakfast: entry.breakfast,
@@ -47,11 +50,16 @@ export async function POST(req: Request) {
           dinner: entry.dinner,
           snacks: entry.snacks,
           weight: entry.weight
+        },
+        select: {
+          entryId: true
         }
       });
     });
 
-    return new Response(JSON.stringify({ success: true }));
+    const results = await Promise.all(promises);
+
+    return new Response(JSON.stringify(results));
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 });
