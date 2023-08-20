@@ -12,7 +12,6 @@ import { MobileNav } from './mobile-nav';
 
 export function MainNav() {
   const pathname = usePathname();
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   return (
     <div className="mr-4 flex justify-between">
@@ -42,7 +41,6 @@ export function MainNav() {
           About
         </Link>
       </nav>
-
       <MobileNav></MobileNav>
     </div>
   );

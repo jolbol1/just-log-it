@@ -11,6 +11,7 @@ import {
 } from './ui/dropdown-menu';
 import Link from 'next/link';
 import { ScrollText, X } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 interface MobileNavProps {
   children?: React.ReactNode;
@@ -18,6 +19,8 @@ interface MobileNavProps {
 
 export function MobileNav({ children }: MobileNavProps) {
   const [open, setOpen] = React.useState(false);
+  const pathname = usePathname();
+
   useLockBody();
 
   return (
@@ -38,12 +41,28 @@ export function MobileNav({ children }: MobileNavProps) {
         <DropdownMenuGroup>
           <DropdownMenuItem asChild className="h-12">
             <Link href="/">
-              <span className="ml-6 font-medium">Home</span>
+              <span
+                className={cn(
+                  'ml-6 font-medium text-foreground/80',
+                  pathname === '/' ? 'text-foreground' : 'text-foreground/60'
+                )}
+              >
+                Home
+              </span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="h-12">
             <Link href="/about">
-              <span className="ml-6 font-medium">About</span>
+              <span
+                className={cn(
+                  'ml-6 font-medium text-foreground/80',
+                  pathname === '/about'
+                    ? 'text-foreground'
+                    : 'text-foreground/60'
+                )}
+              >
+                About
+              </span>
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
