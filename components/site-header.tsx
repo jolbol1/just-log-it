@@ -22,8 +22,8 @@ export async function SiteHeader() {
             <Link
               href="/dashboard"
               className={cn(
-                buttonVariants({ variant: 'default' }),
-                'hidden sm:block'
+                buttonVariants({ variant: 'default', size: 'sm' }),
+                'hidden sm:inline-flex h-8'
               )}
             >
               Dashboard
