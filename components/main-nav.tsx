@@ -9,8 +9,17 @@ import { siteConfig } from '@/config/site';
 import { ScrollText, X } from 'lucide-react';
 import { useState } from 'react';
 import { MobileNav } from './mobile-nav';
+import { User } from 'next-auth';
 
-export function MainNav() {
+export function MainNav({
+  user
+}: {
+  user:
+    | (User & {
+        id: string;
+      })
+    | undefined;
+}) {
   const pathname = usePathname();
 
   return (
@@ -41,7 +50,7 @@ export function MainNav() {
           About
         </Link>
       </nav>
-      <MobileNav></MobileNav>
+      <MobileNav user={user}></MobileNav>
     </div>
   );
 }

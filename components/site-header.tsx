@@ -1,9 +1,7 @@
 import Link from 'next/link';
 
-import { siteConfig } from '@/config/site';
 import { cn } from '@/lib/utils';
 import { MainNav } from '@/components/main-nav';
-// import { MobileNav } from '@/components/mobile-nav';
 import { ModeToggle } from '@/components/mode-toggle';
 import { UserAccountNav } from './user-account-nav';
 import { getCurrentUser } from '@/lib/session';
@@ -15,19 +13,21 @@ export async function SiteHeader() {
   return (
     <header className="supports-backdrop-blur:bg-background/60 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
       <div className="container flex h-14 items-center">
-        <MainNav />
+        <MainNav user={user} />
         {/* <MobileNav /> */}
         <div className="flex flex-1 items-center space-x-2 justify-end">
           <nav className="flex items-center gap-4">
-            <Link
-              href="/dashboard"
-              className={cn(
-                buttonVariants({ variant: 'default', size: 'sm' }),
-                'hidden sm:inline-flex h-8'
-              )}
-            >
-              Dashboard
-            </Link>
+            {user && (
+              <Link
+                href="/dashboard"
+                className={cn(
+                  buttonVariants({ variant: 'default', size: 'sm' }),
+                  'hidden sm:inline-flex h-8'
+                )}
+              >
+                Dashboard
+              </Link>
+            )}
             <ModeToggle />
             <UserAccountNav user={user} />
           </nav>

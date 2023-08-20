@@ -1,27 +1,41 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
-import { useLockBody } from '@/hooks/use-lock-body';
+import { useLockedBody } from '@/hooks/use-lock-body';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
+  DropdownMenuSeparator
 } from './ui/dropdown-menu';
 import Link from 'next/link';
 import { ScrollText, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { User } from 'next-auth';
+import { useMediaQuery } from '@/hooks/use-media-query';
+import { useEffect, useState } from 'react';
 
 interface MobileNavProps {
   children?: React.ReactNode;
+  user?:
+    | (User & {
+        id: string;
+      })
+    | undefined;
 }
 
-export function MobileNav({ children }: MobileNavProps) {
-  const [open, setOpen] = React.useState(false);
+export function MobileNav({ children, user }: MobileNavProps) {
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  useLockBody();
+  useLockedBody(open, 'root');
+  const matches = useMediaQuery('(max-width: 768px)');
+
+  useEffect(() => {
+    setOpen(false);
+  }, [matches]);
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -35,7 +49,7 @@ export function MobileNav({ children }: MobileNavProps) {
           <span className="font-bold">Menu</span>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-[100vw] mt-3 rounded-none border-x-0">
+      <DropdownMenuContent className="w-[100vw] mt-3 rounded-none border-x-0 ">
         {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator /> */}
         <DropdownMenuGroup>
@@ -65,6 +79,25 @@ export function MobileNav({ children }: MobileNavProps) {
               </span>
             </Link>
           </DropdownMenuItem>
+          {user && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild className="h-12">
+                <Link href="/dashboard">
+                  <span
+                    className={cn(
+                      'ml-6 font-medium text-foreground/80',
+                      pathname === '/dashboard'
+                        ? 'text-foreground'
+                        : 'text-foreground/60'
+                    )}
+                  >
+                    Dashboard
+                  </span>
+                </Link>
+              </DropdownMenuItem>
+            </>
+          )}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

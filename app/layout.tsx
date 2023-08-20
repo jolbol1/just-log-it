@@ -69,6 +69,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
+        id="root"
         className={cn(
           'min-h-screen bg-background font-sans antialiased',
           fontHeading.variable,

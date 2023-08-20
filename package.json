@@ -69,6 +69,7 @@
     "trailingComma": "none"
   },
   "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
     "@types/luxon": "^3.3.1",
     "prisma": "^4.13.0"
   }
