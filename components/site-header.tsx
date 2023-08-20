@@ -7,6 +7,7 @@ import { MainNav } from '@/components/main-nav';
 import { ModeToggle } from '@/components/mode-toggle';
 import { UserAccountNav } from './user-account-nav';
 import { getCurrentUser } from '@/lib/session';
+import { buttonVariants } from '@/components/ui/button';
 
 export async function SiteHeader() {
   const user = await getCurrentUser();
@@ -18,6 +19,15 @@ export async function SiteHeader() {
         {/* <MobileNav /> */}
         <div className="flex flex-1 items-center space-x-2 justify-end">
           <nav className="flex items-center gap-4">
+            <Link
+              href="/dashboard"
+              className={cn(
+                buttonVariants({ variant: 'default' }),
+                'hidden sm:block'
+              )}
+            >
+              Dashboard
+            </Link>
             <ModeToggle />
             <UserAccountNav user={user} />
           </nav>
