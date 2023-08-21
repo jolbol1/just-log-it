@@ -15,6 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CaloriesFull } from '@/types/models';
 import { Separator } from '@/components/ui/separator';
 import { Metadata } from 'next';
+import { CardsMetric } from '@/components/linechart';
 
 export const metadata: Metadata = {
   title: 'Dashboard',
@@ -75,6 +76,7 @@ export default async function PlaygroundPage() {
 
   return (
     <main className="w-full p-4 md:p-10 mx-auto max-w-7xl">
+      <CardsMetric data={res.slice(-7)} />
       <Tabs defaultValue="journal">
         <TabsList className="mb-3">
           <TabsTrigger value="journal">Journal</TabsTrigger>

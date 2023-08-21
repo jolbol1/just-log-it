@@ -26,17 +26,8 @@ import {
 } from '@/components/ui/table';
 import {
   ContextMenu,
-  ContextMenuCheckboxItem,
   ContextMenuContent,
   ContextMenuItem,
-  ContextMenuLabel,
-  ContextMenuRadioGroup,
-  ContextMenuRadioItem,
-  ContextMenuSeparator,
-  ContextMenuShortcut,
-  ContextMenuSub,
-  ContextMenuSubContent,
-  ContextMenuSubTrigger,
   ContextMenuTrigger
 } from '@/components/ui/context-menu';
 
@@ -44,7 +35,7 @@ import { DataTablePagination } from '@/components/entry-table/data-table-paginat
 import { DataTableToolbar } from '@/components/entry-table/data-table-toolbar';
 import { ConfirmDelete } from '../confirm-delete';
 import { EditEntryDialog } from '../edit-entry-dialog';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { EntryTableContext } from './entry-table-context';
 
 interface DataTableProps<TData, TValue> {
