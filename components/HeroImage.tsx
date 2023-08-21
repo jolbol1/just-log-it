@@ -6,12 +6,14 @@ import { useTheme } from 'next-themes';
 import Image from 'next/image';
 
 export const HeroImage = () => {
-  const { resolvedTheme } = useTheme();
+  const { resolvedTheme: mode } = useTheme();
   return (
-    <Image
-      className="relative rounded-xl"
-      alt="Dashboard of site"
-      src={resolvedTheme == 'light' ? lightPromo : darkPromo}
-    />
+    <>
+      <Image
+        className="relative rounded-xl"
+        alt="Dashboard of site"
+        src={mode && mode == 'light' ? lightPromo : darkPromo}
+      />
+    </>
   );
 };

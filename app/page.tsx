@@ -39,8 +39,16 @@ export default async function IndexPage() {
       >
         <div className="relative">
           <div className="absolute -inset-0 bg-gradient-to-r from-primary to-primary rounded-lg blur "></div>
-
-          <HeroImage />
+          <Image
+            className="relative rounded-xl block dark:hidden"
+            alt="Dashboard of site"
+            src={lightPromo}
+          />
+          <Image
+            className="relative rounded-xl hidden dark:block"
+            alt="Dashboard of site"
+            src={darkPromo}
+          />
         </div>
       </section>
       <section
