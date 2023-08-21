@@ -19,7 +19,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { ConfirmDelete } from '../confirm-delete';
 import { EditEntryDialog } from '../edit-entry-dialog';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { EntryTableContext } from './entry-table-context';
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -28,9 +29,18 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row
 }: DataTableRowActionsProps<TData>) {
-  const [deleteOpen, setDeleteOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
+  const { setEntryId, setConfirmOpen, setEditOpen } =
+    useContext(EntryTableContext);
 
+  const handleEditOpen = (id: number) => {
+    setEntryId(id);
+    setEditOpen(true);
+  };
+
+  const handleDeleteOpen = (id: number) => {
+    setEntryId(id);
+    setConfirmOpen(true);
+  };
   return (
     <>
       <DropdownMenu>
@@ -44,27 +54,19 @@ export function DataTableRowActions<TData>({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuItem onSelect={() => setEditOpen(true)}>
+          <DropdownMenuItem
+            onSelect={() => handleEditOpen(row.getValue('entryId'))}
+          >
             Edit
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onSelect={() => setDeleteOpen(true)}>
+          <DropdownMenuItem
+            onSelect={() => handleDeleteOpen(row.getValue('entryId'))}
+          >
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <ConfirmDelete
-        entryId={row.getValue('entryId')}
-        open={deleteOpen}
-        onOpenChange={setDeleteOpen}
-        onSuccess={() => setDeleteOpen(false)}
-      />
-      <EditEntryDialog
-        entryId={row.getValue('entryId')}
-        open={editOpen}
-        onOpenChange={setEditOpen}
-        onSuccess={() => setEditOpen(false)}
-      />
     </>
   );
 }
