@@ -2,7 +2,11 @@ import { buttonVariants } from '@/components/ui/button';
 import { authOptions } from '@/lib/auth';
 import { cn } from '@/lib/utils';
 import { MoveRight } from 'lucide-react';
+import darkPromo from '@/public/images/promo-dark.png';
+import lightPromo from '@/public/images/promo-light.png';
+import Image from 'next/image';
 import Link from 'next/link';
+import { HeroImage } from '@/components/HeroImage';
 
 export default async function IndexPage() {
   return (
@@ -27,6 +31,16 @@ export default async function IndexPage() {
               Get Started Now <MoveRight className="ml-2 h-4 w-4" />
             </Link>
           </div>
+        </div>
+      </section>
+      <section
+        id="image"
+        className="container space-y-6  py-8  md:py-10 lg:py-12 relative"
+      >
+        <div className="relative">
+          <div className="absolute -inset-0 bg-gradient-to-r from-primary to-primary rounded-lg blur "></div>
+
+          <HeroImage />
         </div>
       </section>
       <section
