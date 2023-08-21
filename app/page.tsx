@@ -26,7 +26,10 @@ export default async function IndexPage() {
               href={authOptions.pages?.signIn ?? '/login'}
               target="_blank"
               rel="noreferrer"
-              className={cn(buttonVariants({ variant: 'default', size: 'lg' }))}
+              className={cn(
+                buttonVariants({ variant: 'default', size: 'lg' }),
+                'font-bold'
+              )}
             >
               Get Started Now <MoveRight className="ml-2 h-4 w-4" />
             </Link>
