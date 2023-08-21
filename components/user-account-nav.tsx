@@ -22,9 +22,8 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
   const router = useRouter();
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger aria-label="User Account Menu">
         <UserAvatar
-          aria-label="User Account Menu"
           user={{ name: user?.name || null, image: user?.image || null }}
           className="h-8 w-8"
         />
