@@ -46,11 +46,13 @@ export default async function IndexPage() {
             className="relative rounded-xl block dark:hidden"
             alt="Dashboard of site"
             src={lightPromo}
+            priority={true}
           />
           <Image
             className="relative rounded-xl hidden dark:block"
             alt="Dashboard of site"
             src={darkPromo}
+            priority={true}
           />
         </div>
       </section>
