@@ -24,6 +24,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <UserAvatar
+          aria-label="User Account Menu"
           user={{ name: user?.name || null, image: user?.image || null }}
           className="h-8 w-8"
         />
