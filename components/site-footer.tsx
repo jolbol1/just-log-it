@@ -7,12 +7,12 @@ export function SiteFooter() {
         <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
           Built by{' '}
           <a
-            href={'https://jamesshopland.com'}
+            href={'https://mwd.design'}
             target="_blank"
             rel="noreferrer"
             className="font-medium underline underline-offset-4"
           >
-            jshopland
+            MWD
           </a>
         </p>
       </div>
