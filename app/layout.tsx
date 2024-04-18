@@ -9,8 +9,16 @@ import { ThemeProvider } from '@/components/providers';
 import { cn } from '@/lib/utils';
 import { siteConfig } from '@/config/site';
 import { SiteFooter } from '@/components/site-footer';
+import { Metadata, Viewport } from 'next';
 
-export const metadata = {
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' }
+  ]
+};
+
+export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`
@@ -24,10 +32,6 @@ export const metadata = {
     }
   ],
   creator: 'James Shopland',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' }
-  ],
   openGraph: {
     type: 'website',
     locale: 'en_GB',
